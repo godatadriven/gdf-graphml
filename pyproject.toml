@@ -1,0 +1,11 @@
+[gdf_workshop]
+
+name = "gdf_workshop"
+
+version = "0.0.1"
+
+requires-python = ">=3.10"
+
+[build-system]
+requires = ["setuptools>=43.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
