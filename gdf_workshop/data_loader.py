@@ -41,7 +41,7 @@ def read_dummy_nodes(spark):
     return nodes_df
 
 
-def read_csv_edges(spark):
+def read_csv_edges(spark, filepath):
     schema = schema = (
         StructType()
         .add("year", IntegerType(), True)
@@ -51,13 +51,13 @@ def read_csv_edges(spark):
     edges_df = (
         spark.read.option("header", True)
         .schema(schema)
-        .csv("data/author-author-relationships.csv")
+        .csv(filepath)
     )
 
     return edges_df
 
 
-def read_csv_nodes(spark):
+def read_csv_nodes(spark, filepath):
     schema = schema = (
         StructType()
         .add("author", StringType(), True)
@@ -65,7 +65,7 @@ def read_csv_nodes(spark):
         .add("id", IntegerType(), True)
     )
     nodes_df = (
-        spark.read.option("header", True).schema(schema).csv("data/author-nodes.csv")
+        spark.read.option("header", True).schema(schema).csv(filepath)
     )
 
     return nodes_df
