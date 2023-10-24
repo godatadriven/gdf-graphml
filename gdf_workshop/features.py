@@ -42,15 +42,13 @@ def combine_features(*features, output_cols, source_table_alias="ca"):
                 & (combined_features.dst == next_feature.dst),
                 how="left",
             )
-            .selectExpr(
+        )
+    return combined_features.selectExpr(
                 f"{source_table_alias}.src",
                 f"{source_table_alias}.dst",
                 f"{source_table_alias}.coauth as label",
                 *output_cols,
-            )
-            .fillna(0, subset=list(output_cols))
-        )
-    return combined_features
+            ).fillna(0, subset=list(output_cols))
 
 def extract_first_author_collaboration(df):
     w = Window.partitionBy("id1", "id2").orderBy(f.col("year"))
