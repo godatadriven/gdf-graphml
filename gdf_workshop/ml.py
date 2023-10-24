@@ -25,3 +25,4 @@ def evaluate_model(model, input_data):
     valid_preds = model.transform(input_data)
     acc = BinaryClassificationEvaluator().evaluate(valid_preds)
     print(acc)
+    return valid_preds
