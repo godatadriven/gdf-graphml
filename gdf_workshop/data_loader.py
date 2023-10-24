@@ -81,7 +81,6 @@ def friends(spark):
             ("c", "Charlie", 30),
             ("d", "David", 29),
             ("e", "Esther", 32),
-            ("f", "Fanny", 36),
         ],
         ["id", "name", "age"],
     )
@@ -91,8 +90,6 @@ def friends(spark):
             ("a", "b", "friend"),
             ("b", "c", "follow"),
             ("c", "b", "follow"),
-            ("f", "c", "follow"),
-            ("e", "f", "follow"),
             ("e", "d", "friend"),
             ("d", "a", "friend"),
         ],

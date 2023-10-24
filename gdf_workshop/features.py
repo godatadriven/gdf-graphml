@@ -13,15 +13,24 @@ from graphframes import *
 #     ...
 
 
-def _add_directed(undir_edges_df):
-    # for each edge between i,j, add an edge for j,i
-    dir_edges_df = (
-        undir_edges_df.withColumnRenamed("dst", "src_")
+def to_undirected(directed_edges_df):
+    # order edges so that src < dst
+    ordered_directed_edged_df = (directed_edges_df
+          .withColumn("src_new", f.least("src", "dst"))
+          .withColumn("dst_new", f.greatest("src", "dst"))
+          .drop("src", "dst")
+          .withColumnRenamed("src_new", "src")
+          .withColumnRenamed("dst_new", "dst")
+    )
+
+    # get edges in reverse order so that src > dst
+    reverse_edges_df = (
+        ordered_directed_edged_df.withColumnRenamed("dst", "src_")
         .withColumnRenamed("src", "dst")
         .withColumnRenamed("src_", "src")
     )
-    edges_df = undir_edges_df.unionByName(dir_edges_df)
-    return edges_df
+    undircted_edges_df = ordered_directed_edged_df.unionByName(reverse_edges_df)
+    return undircted_edges_df
 
 def combine_features(*features, output_cols, source_table_alias="ca"):
     combined_features = features[0]
